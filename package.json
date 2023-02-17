@@ -1,0 +1,14 @@
+{
+  "name": "bookshelf",
+  "version": "1.0.0",
+  "description": "For a virtual bookshelf web app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gaurav Mutha",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
