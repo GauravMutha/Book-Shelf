@@ -17,3 +17,11 @@ module.exports.signin=function(req,res){
         title:'Bookshelf Sign In!'
     })
 }
+
+module.exports.createUser=function(req,res){
+    //later
+}
+
+module.exports.createSession=function(req,res){
+    //later
+}
