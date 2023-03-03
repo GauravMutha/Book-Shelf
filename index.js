@@ -1,11 +1,14 @@
 const express = require('express');
+const cookieParser=require('cookie-parser');
 const expressLayouts=require('express-ejs-layouts');
 const path=require('path');
 const port =3000;
 
-// const db=require('./config/mongoose');
+const db=require('./config/mongoose');
 
 const app=express();
+app.use(express.urlencoded({extended:true}));
+app.use(cookieParser());
 
 //uses express router
 app.use(expressLayouts);

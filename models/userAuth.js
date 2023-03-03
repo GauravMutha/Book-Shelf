@@ -8,4 +8,7 @@ const userAuthSchema = new mongoose.Schema({
     timestamps:true
 })
 
-module.exports.userAuthSchema;
+const userAuthCollection=mongoose.model('userAuthCollection',userAuthSchema);
+
+
+module.exports=userAuthCollection;
