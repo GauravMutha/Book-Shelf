@@ -40,5 +40,16 @@ module.exports.createUser=function(req,res){
 }
 
 module.exports.createSession=function(req,res){
-    //later
+    userAuth.findOne({email:req.body.email},function(err,userFound){
+        if(err)  {console.log('Error in searching operation in database for sign up request'); return;}
+
+        if(userFound){
+            if(userFound.password!= req.body.password){
+                return res.redirect('back');
+            }
+            res.cookie('user_id',userFound.id);
+            return res.redirect('/user/profile');
+        }
+        else return res.redirect('back');
+    })
 }
