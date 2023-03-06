@@ -1,7 +1,19 @@
 const userAuth=require('../models/userAuth');
 
 module.exports.showProfile=function(req,res){
-    res.send('<h1>User profile page</h1>');
+    if(req.cookies.user_id){
+        userAuth.findById(req.cookies.user_id,function(err,userFound){
+            if(err) {console.log(err,'Error in searching for user'); return;}
+            if(userFound){
+                return res.render('user_profile',{
+                    title:'USER PROFILE',
+                    user:userFound
+                })
+            }
+            else {return res.redirect('/user/sign-in');}
+        })
+    }
+    else return res.redirect('/user/sign-in');
 }
 
 module.exports.editProfile=function(req,res){
