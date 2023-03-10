@@ -40,5 +40,5 @@ module.exports.createUser=function(req,res){
 }
 
 module.exports.createSession=function(req,res){
-    //later
+    res.send('<h1>Dummy User Profile</h1>')
 }
