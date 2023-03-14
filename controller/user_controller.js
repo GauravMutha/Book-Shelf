@@ -40,5 +40,5 @@ module.exports.createUser=function(req,res){
 }
 
 module.exports.createSession=function(req,res){
-    res.send('<h1>Dummy User Profile</h1>')
+    return res.redirect('/user/profile');
 }
