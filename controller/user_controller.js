@@ -9,13 +9,19 @@ module.exports.editProfile=function(req,res){
 }
 
 module.exports.signup=function(req,res){
-    res.render('user_sign_up',{
+    if(req.isAuthenticated()){
+        return res.redirect('/')
+    }
+    return res.render('user_sign_up',{
         title:'Bookshelf Sign Up!'
     })
 }
 
 module.exports.signin=function(req,res){
-    res.render('user_sign_in',{
+    if(req.isAuthenticated()){
+        return res.redirect('/')
+    }
+    return res.render('user_sign_in',{
         title:'Bookshelf Sign In!'
     })
 }
