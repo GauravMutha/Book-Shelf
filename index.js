@@ -6,7 +6,7 @@ const passport=require('passport');
 const passportLocal=require('./config/passport');
 const path=require('path');
 const port =3000;
-
+require('dotenv').config();
 const db=require('./config/mongoose');
 
 const app=express();
@@ -20,7 +20,7 @@ app.set('views',path.join(__dirname,'views'))
 
 app.use(session({
     name:'BookShelf',
-    secret:'Thesecretestofallsecret',
+    secret:process.env.SESSION_SECRET,
     saveUninitialized:false,
     resave:false,
     cookie:{

@@ -1,7 +1,7 @@
 const userAuth=require('../models/userAuth');
 
 module.exports.showProfile=function(req,res){
-    res.send('<h1>User profile page</h1>');
+    res.render('user_profile');
 }
 
 module.exports.editProfile=function(req,res){
