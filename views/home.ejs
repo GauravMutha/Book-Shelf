@@ -1,8 +1,12 @@
-<h1> <%= title%> </h1>
+<h1><%= title %></h1>
 
-<p>Do not have an account? Click here!</p>
-<button onclick="window.location.href='/user/sign-up'">Register</button>
+<% if (locals.user) { %>
+  <h1><%= locals.user.name %></h1>
+  <button onclick="window.location.href='/user/sign-out'">Sign Out</button>
+<% } else { %>
+  <p>Do not have an account? Click here!</p>
+  <button onclick="window.location.href='/user/sign-up'">Register</button>
 
-<p>Click here to enter into your study room</p>
-<button onclick="window.location.href='/user/sign-in'">Enter</button>
-    
+  <p>Click here to enter into your study room</p>
+  <button onclick="window.location.href='/user/sign-in'">Enter</button>
+<% } %>

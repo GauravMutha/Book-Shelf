@@ -4,10 +4,6 @@ module.exports.showProfile=function(req,res){
     res.render('user_profile');
 }
 
-module.exports.editProfile=function(req,res){
-    res.send('<h1>Edit user profile</h1>')
-}
-
 module.exports.signup=function(req,res){
     if(req.isAuthenticated()){
         return res.redirect('/')
@@ -47,4 +43,11 @@ module.exports.createUser=function(req,res){
 
 module.exports.createSession=function(req,res){
     return res.redirect('/user/profile');
+}
+
+module.exports.destroySession=function(req,res){
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        res.redirect('/');
+      });
 }
