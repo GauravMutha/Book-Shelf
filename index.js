@@ -8,6 +8,18 @@ const path=require('path');
 const port =3000;
 require('dotenv').config();
 const db=require('./config/mongoose');
+const MongoStore = require('connect-mongo');
+
+const store = new MongoStore(
+    {
+        mongoUrl:process.env.MONGO_URL,
+        mongooseConnection:db,
+        autoRemove: 'disabled'
+    },
+    function(err){
+        console.log(err || 'connect-mongodb setup OK')
+      }
+  );
 
 const app=express();
 app.use(express.urlencoded({extended:true}));
@@ -17,7 +29,6 @@ app.use(cookieParser());
 app.use(expressLayouts);
 app.set('view engine', 'ejs')
 app.set('views',path.join(__dirname,'views'))
-
 app.use(session({
     name:'BookShelf',
     secret:process.env.SESSION_SECRET,
@@ -25,7 +36,8 @@ app.use(session({
     resave:false,
     cookie:{
         maxAge:(1000*60*100)
-    }
+    },
+    store:store
 }));
 app.use(passport.initialize());
 app.use(passport.session());
