@@ -1,7 +1,7 @@
 <h1><%= title %></h1>
 
 <% if (locals.user) { %>
-  <h1><%= locals.user.name %></h1>
+  <a href="/user/profile"><%= locals.user.name%></a>
   <button onclick="window.location.href='/user/sign-out'">Sign Out</button>
 <% } else { %>
   <p>Do not have an account? Click here!</p>

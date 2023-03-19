@@ -19,14 +19,23 @@ const store = new MongoStore(
     function(err){
         console.log(err || 'connect-mongodb setup OK')
       }
-  );
-
+      );
 const app=express();
+const sassMiddleware=require('node-sass-middleware');
+app.use(sassMiddleware({
+    src:'./assets/scss',
+    dest:'./assets/css',
+    debug:true,
+    outputStyle:'extended',
+    prefix:'/css'
+}))
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 
-//uses express router
+app.use(express.static('./assets'));
 app.use(expressLayouts);
+app.set('layout extractStyles', true);
+app.set('layout extractScripts', true);
 app.set('view engine', 'ejs')
 app.set('views',path.join(__dirname,'views'))
 app.use(session({

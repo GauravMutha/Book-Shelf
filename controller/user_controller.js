@@ -42,7 +42,7 @@ module.exports.createUser=function(req,res){
 }
 
 module.exports.createSession=function(req,res){
-    return res.redirect('/user/profile');
+    return res.redirect('/');
 }
 
 module.exports.destroySession=function(req,res){
