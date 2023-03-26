@@ -1,4 +1,4 @@
-const userAuth=require('../models/userAuth');
+const userCollection=require('../models/user');
 
 module.exports.showProfile=function(req,res){
     res.render('user_profile');
@@ -26,10 +26,10 @@ module.exports.createUser=function(req,res){
     if(req.body.password!=req.body.confirm_password){
         return res.redirect('back');
     }
-    userAuth.findOne({email:req.body.email},function(err,foundUser){
+    userCollection.findOne({email:req.body.email},function(err,foundUser){
         if(err)  {console.log('Error in searching operation in database for sign up request'); return;}
         if(!foundUser){
-            userAuth.create(req.body,function(err){
+            userCollection.create(req.body,function(err){
                 if(err)  {console.log('Error in creating user in database for sign up'); return;}
 
                 return res.redirect('/user/sign-in')

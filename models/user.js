@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userAuthSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     email: { type: String, required: true , unique:true},
     password: { type: String, required: true },
     name: { type: String, required: true }
@@ -8,7 +8,7 @@ const userAuthSchema = new mongoose.Schema({
     timestamps:true
 })
 
-const userAuthCollection=mongoose.model('userAuthCollection',userAuthSchema);
+const userCollection=mongoose.model('userCollection',userSchema);
 
 
-module.exports=userAuthCollection;
+module.exports=userCollection;
