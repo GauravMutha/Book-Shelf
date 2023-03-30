@@ -1,4 +1,5 @@
-const userCollection=require('../models/user');
+const { userCollection,bookCollection } = require('../models/userCollection');
+
 
 module.exports.showProfile=function(req,res){
     res.render('user_profile');
@@ -51,3 +52,46 @@ module.exports.destroySession=function(req,res){
         res.redirect('/');
       });
 }
+
+module.exports.showBookForm=function(req,res){
+    return res.render('book_form');
+}
+
+
+module.exports.uploadBook = function(req, res) {
+  const userID=req.user._id;
+  userCollection.findById(userID, (err, foundUser) => {
+    if (err) {
+      console.log('Error finding user', err);
+      return res.status(500).send('Internal server error');
+    }
+    if (!foundUser) {
+      console.log('User not found');
+      return res.status(404).send('User not found');
+    }
+    bookCollection.upload(req, res, function (err) {
+      if (err) {
+        console.log('Error uploading file', err);
+        return res.status(500).send('Internal server error');
+      }
+      console.log(req.file);
+      foundUser.bookSchema.push({
+        bookFile: req.file.filename,
+        name: req.body.name,
+        author: req.body.author,
+        edition: req.body.edition,
+        genre: req.body.genre,
+        isStarred: req.body.isStarred,
+        readList: req.body.readList,
+      });
+      
+      foundUser.save((err) => {
+        if (err) {
+          console.log('Error saving book to user', err);
+          return res.status(500).send('Internal server error');
+        }
+        return res.redirect('/user/profile');
+      });
+    });
+  });
+};

@@ -33,6 +33,8 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 
 app.use(express.static('./assets'));
+app.use('./user_uploads',express.static(__dirname+'user_uploads'));
+
 app.use(expressLayouts);
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
