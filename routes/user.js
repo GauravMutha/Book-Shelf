@@ -14,4 +14,5 @@ router.post('/create-session',passport.authenticate(
 router.get('/sign-out',userController.destroySession);
 router.get('/bookForm',passport.checkAuthentication,userController.showBookForm);
 router.post('/book-upload',passport.checkAuthentication,userController.uploadBook);
+router.get('/pdf/:id',userController.showBook);
 module.exports=router;

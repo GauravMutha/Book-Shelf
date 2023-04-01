@@ -4,3 +4,5 @@
 </h1>
 <p><%= user.name %></p>
 <p><%= user.email %></p>
+<% const id = user.bookSchema[0].bookFile %>
+<a href="/user/pdf/<%= id%>">Your Book</a>

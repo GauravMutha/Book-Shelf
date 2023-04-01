@@ -29,8 +29,9 @@ const storage = multer.diskStorage({
       cb(null, path.join(__dirname,'..',BOOK_PATH))
     },
     filename: function (req, file, cb) {
+      const fileExtension=path.extname(file.originalname);
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.fieldname + '-' + uniqueSuffix)
+      cb(null, file.fieldname + '-' + uniqueSuffix+fileExtension)
     }
   })
   

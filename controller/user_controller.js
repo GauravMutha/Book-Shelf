@@ -1,5 +1,5 @@
 const { userCollection,bookCollection } = require('../models/userCollection');
-
+const path=require('path');
 
 module.exports.showProfile=function(req,res){
     res.render('user_profile');
@@ -74,7 +74,6 @@ module.exports.uploadBook = function(req, res) {
         console.log('Error uploading file', err);
         return res.status(500).send('Internal server error');
       }
-      console.log(req.file);
       foundUser.bookSchema.push({
         bookFile: req.file.filename,
         name: req.body.name,
@@ -95,3 +94,11 @@ module.exports.uploadBook = function(req, res) {
     });
   });
 };
+
+module.exports.showBook=function(req,res){
+    const fileName=req.params.id;
+    const filePath=path.join(__dirname, '..', 'user_uploads', 'books', fileName);
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline; filename=`${fileName}');
+    res.sendFile(filePath)
+}
