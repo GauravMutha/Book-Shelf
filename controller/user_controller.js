@@ -1,5 +1,6 @@
 const { userCollection,bookCollection } = require('../models/userCollection');
 const path=require('path');
+const fs=require('fs')
 
 module.exports.showProfile=function(req,res){
     res.render('user_profile');
@@ -74,15 +75,18 @@ module.exports.uploadBook = function(req, res) {
         console.log('Error uploading file', err);
         return res.status(500).send('Internal server error');
       }
-      foundUser.bookSchema.push({
-        bookFile: req.file.filename,
-        name: req.body.name,
-        author: req.body.author,
-        edition: req.body.edition,
-        genre: req.body.genre,
-        isStarred: req.body.isStarred,
-        readList: req.body.readList,
-      });
+      if(req.file){
+        const allowedTypes = ['application/pdf', 'application/epub+zip'];
+        foundUser.bookSchema.push({
+          bookFile: req.file.filename,
+          name: req.body.name,
+          author: req.body.author,
+          edition: req.body.edition,
+          genre: req.body.genre,
+          isStarred: req.body.isStarred,
+          readList: req.body.readList,
+        });
+      }
       
       foundUser.save((err) => {
         if (err) {
@@ -99,6 +103,33 @@ module.exports.showBook=function(req,res){
     const fileName=req.params.id;
     const filePath=path.join(__dirname, '..', 'user_uploads', 'books', fileName);
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'inline; filename=`${fileName}');
+    res.setHeader('Content-Disposition', `inline; filename="${fileName}"`);
     res.sendFile(filePath)
+}
+module.exports.deleteBook=function(req,res){
+    const bookID=req.params.id;
+    const userID=req.user._id;
+    const fileName=decodeURIComponent(req.params.bookFile);
+    const filePath=path.join(__dirname, '..', 'user_uploads', 'books', fileName);
+    userCollection.findById(userID,function(err,foundUser){
+      if(err){
+        console.log('Error',err);
+        return res.status(500).send('Internal server error in finding the user');
+      }
+      if(!foundUser) {
+        console.log('Error',err); 
+        return res.status(404).send('User not found');
+      }
+      fs.access(filePath,fs.constants.F_OK,function(err){
+        if(err) return res.status(500).send('Internal server error in finding the book');
+        foundUser.bookSchema.id(bookID).remove();
+        foundUser.save(function(err){
+          if(err) return res.status(500).send('Inetrnal sevrer error in deleting the book');
+          fs.unlink(filePath,function(err){
+              if(err) return res.status(500).send('Inetrnal sevrer error in deleting the book');
+              return res.redirect('back'); 
+          });
+        })
+      })
+    })
 }
