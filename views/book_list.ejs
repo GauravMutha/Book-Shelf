@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="/css/book_list.css">
+<script src="/publics/js/main.js"></script>
+
+<h1>BookShelf / My Books</h1>
+<% const arr=user.bookSchema; %>
+
+<% arr.forEach(function({bookFile,name,_id,readList}){ %>
+    <%  const bookFileEncoded=encodeURIComponent(bookFile); %>
+    <li>
+        <p>
+            <a href="/user/pdf/<%=bookFile%>" target="_blank"><%=name%></a>
+            <small><a href="/user/pdf/delete-book/<%=_id%>/<%=bookFileEncoded%>">X</a></small>
+                <label>
+                  <input type="checkbox" name="readList" data-book-id="<%=_id%>"  <%= readList ? 'checked' : '' %> >
+                  Add to read list
+                </label>
+        </p>
+    </li>
+<% }) %>

@@ -83,7 +83,6 @@ module.exports.uploadBook = function(req, res) {
           author: req.body.author,
           edition: req.body.edition,
           genre: req.body.genre,
-          isStarred: req.body.isStarred,
           readList: req.body.readList,
         });
       }
@@ -132,4 +131,28 @@ module.exports.deleteBook=function(req,res){
         })
       })
     })
+}
+
+module.exports.showBooks=function(req,res){
+  return res.render('book_list');
+}
+
+module.exports.updateReadList=function(req,res){
+  const foundUser=req.user;
+  const bookID=decodeURIComponent(req.body.bookID);
+  const ticked=req.body.ticked;
+  // console.log(bookID,ticked)
+  const book = foundUser.bookSchema.id(bookID);
+  if (!book) {
+    console.log('Book not found');
+    return res.redirect('back');
+  }
+  book.readList=ticked;
+  foundUser.save(function(err){
+    if(err){
+      console.log(err);
+      return res.status(500).send('Error in marking the book for read list');
+    }
+    return res.redirect('back');
+  })
 }

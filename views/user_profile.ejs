@@ -4,17 +4,3 @@
 </h1>
 <p><%= user.name %></p>
 <p><%= user.email %></p>
-
-
-<% const arr=user.bookSchema; %>
-
-<% arr.forEach(function({bookFile,name,_id}){ %>
-    <%  const bookFileEncoded=encodeURIComponent(bookFile); %>
-    <% console.log(bookFileEncoded)%>
-    <li>
-        <p>
-            <a href="/user/pdf/<%=bookFile%>" target="_blank"><%=name%></a>
-            <small><a href="/user/pdf/delete-book/<%=_id%>/<%=bookFileEncoded%>">X</a></small>
-        </p>
-    </li>
-<% }) %>

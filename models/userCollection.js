@@ -9,8 +9,7 @@ const bookSchema=new mongoose.Schema({
     author:{type:String},
     edition:{type:String},
     genre:{type:String},
-    isStarred:{type:Boolean},
-    readList:{type:Boolean}
+    readList:{type:Boolean ,default:false, index:true}
 },{
     timestamps:true 
 })

@@ -16,4 +16,6 @@ router.get('/bookForm',passport.checkAuthentication,userController.showBookForm)
 router.post('/book-upload',passport.checkAuthentication,userController.uploadBook);
 router.get('/pdf/:id',userController.showBook);
 router.get('/pdf/delete-book/:id/:bookFile',userController.deleteBook)
+router.get('/books',userController.showBooks)
+router.put('/books/update-read-list',userController.updateReadList);
 module.exports=router;
