@@ -37,6 +37,10 @@ const storage = multer.diskStorage({
 bookSchema.statics.upload= multer({ storage: storage }).single('bookFile');
 bookSchema.statics.bookPath= BOOK_PATH;
 
+userSchema.statics.getReadList= function (callback){
+  return this.find({'bookSchema.readList':true},callback);
+}
+
 const userCollection=mongoose.model('userCollection',userSchema);
 const bookCollection=mongoose.model('bookCollection',bookSchema);
 
