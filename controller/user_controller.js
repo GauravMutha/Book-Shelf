@@ -134,23 +134,7 @@ module.exports.deleteBook=function(req,res){
 }
 
 module.exports.showBooks=function(req,res){
-  userCollection.aggregate([
-    { $match: { _id: req.user._id } }, // Match the parent document by _id
-    { $project: { filteredBooks: { $filter: { input: '$bookSchema', as: 'book', cond: { $eq: ['$$book.readList', true] } } } } }
-  ], (err, result) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    if (result.length === 0) {
-      console.log('Parent not found');
-      return;
-    }
-    
-    // Access the filteredBooks array in the result
-    const filteredBooks = result[0].filteredBooks;
-    return res.render('book_list',{readListBooks:filteredBooks}) // Log the filtered array elements
-  });
+  return res.render('book_list')
 }
 
 module.exports.updateReadList=function(req,res){
@@ -171,4 +155,24 @@ module.exports.updateReadList=function(req,res){
     }
     return res.redirect('back');
   })
+}
+
+module.exports.sendRLBooksToClient=function(req,res){
+  userCollection.aggregate([
+    { $match: { _id: req.user._id } }, // Match the parent document by _id
+    { $project: { filteredBooks: { $filter: { input: '$bookSchema', as: 'book', cond: { $eq: ['$$book.readList', true] } } } } }
+  ], (err, result) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    if (result.length === 0) {
+      console.log('Parent not found');
+      return;
+    }
+    
+    // Access the filteredBooks array in the result
+    const filteredBooks = result[0].filteredBooks;
+    res.send(filteredBooks)
+  });
 }

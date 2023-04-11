@@ -32,12 +32,6 @@
         <% }) %>
     </div>
     <div class="tab-pane fade" id="RL-tab-pane" role="tabpanel" aria-labelledby="RL-tab" tabindex="0">
-      <% readListBooks.forEach(function({bookFile,name}){ %>
-        <%  const bookFileEncoded=encodeURIComponent(bookFile); %>
-        <li>
-            <p><a href="/user/pdf/<%=bookFile%>" target="_blank"><%=name%></a></p>
-        </li>
-    <% }) %>
     </div>
   </div>
 
