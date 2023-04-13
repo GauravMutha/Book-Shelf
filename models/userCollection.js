@@ -5,17 +5,17 @@ const BOOK_PATH =path.join('/user_uploads/books');
 
 const bookSchema=new mongoose.Schema({
     bookFile:{type:String},
-    name:{type:String,required:true,unique:true},
+    name:{type:String,required:true},
     author:{type:String},
     edition:{type:String},
     genre:{type:String},
-    readList:{type:Boolean ,default:false, index:true}
+    readList:{type:Boolean ,default:false,index:true}
 },{
     timestamps:true 
 })
 
 const userSchema = new mongoose.Schema({
-    email: { type: String, required: true , unique:true},
+    email: { type: String, required: true,unique:true},
     password: { type: String, required: true },
     name: { type: String, required: true },
     bookSchema:[bookSchema]

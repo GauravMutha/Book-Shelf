@@ -32,7 +32,7 @@ module.exports.createUser=function(req,res){
         if(err)  {console.log('Error in searching operation in database for sign up request'); return;}
         if(!foundUser){
             userCollection.create(req.body,function(err){
-                if(err)  {console.log('Error in creating user in database for sign up'); return;}
+                if(err)  {console.log(err,'Error in creating user in database for sign up'); return;}
 
                 return res.redirect('/user/sign-in')
             })
