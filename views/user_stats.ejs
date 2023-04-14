@@ -1,0 +1,45 @@
+<link rel="stylesheet" href="/css/user_profile.css">
+<canvas id="myGenreChart" style="width:100%;max-width:600px"></canvas>
+<% const allColors=[  '#FF0000',  '#FF7F00',  '#FFFF00',  '#00FF00',  '#00FFFF',  '#0000FF',  '#8B00FF',  '#FF00FF',  '#FFC0CB',  '#FFA07A',  '#FFD700',  '#32CD32',  '#00CED1',  '#4169E1',  '#9400D3',  '#7FFF00',  '#ADFF2F',  '#228B22',  '#00FA9A',  '#4B0082']%>
+
+
+<%
+var genreCount={}
+var genreArr=[] , countArr=[]
+user.bookSchema.forEach(function({genre}){
+    if(genreCount.hasOwnProperty(genre)){
+        genreCount[genre]+=1;
+        }else{
+            genreCount[genre]=1;
+        }
+    })
+    %>
+    
+    <%for(const key in genreCount){ %>
+        genreArr.push(key)
+        countArr.push(genreCount[key])
+        <% } %>
+        
+        <%const colors= allColors.splice(0,genreArr.length)%>
+        
+<script type="text/javascript"  src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <%
+        new Chart("myGenreChart", {
+            type: "pie",
+            data: {
+                labels: genreArr,
+                datasets: [{
+                    backgroundColor: colors,
+                    data: countArr
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "Genre Wise Distribution"
+                }
+            }
+        });
+        %>
+        
+        
