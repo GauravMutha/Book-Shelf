@@ -1,3 +1,4 @@
+//makes the put ajax request when checkboxes against books are seleted for marking them to include in read list
 const checkBoxes=document.querySelectorAll('input[type="checkbox"][name="readList"]');
 checkBoxes.forEach(function(checkBox){
     checkBox.addEventListener('change',function(event){
@@ -20,6 +21,7 @@ checkBoxes.forEach(function(checkBox){
     })
 })
 
+//It renders the read list and fill the dive container of read list tab with the books
 const tab2=document.getElementById('RL-tab');
 
 tab2.addEventListener('click',function(event){
@@ -50,4 +52,27 @@ tab2.addEventListener('click',function(event){
         }
     }
     xhr.send();
+})
+
+
+//It handles the searching feature
+
+
+
+const tags=document.querySelectorAll('input[type="radio"][name="tags"]');
+var selectedTag;
+tags.forEach(function(tag){
+    tag.addEventListener('click',function(e){
+        selectedTag=e.target.value
+        searchBox.value="";
+    })
+})
+
+var allBooks=JSON.parse((document.querySelector('input[type="hidden"][name="userInfo"]')).dataset.userinfo);
+const  searchBox=document.querySelector('input[type="search"][name="search-box"]');
+searchBox.addEventListener('input',(e)=>{
+    const queryResult=allBooks.filter((book)=>{
+        return book[selectedTag]==e.target.value
+    })
+    console.log(queryResult)
 })

@@ -1,5 +1,3 @@
-
-
 <link rel="stylesheet" href="/css/book_list.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <script src="/publics/js/main.js"></script>
@@ -14,7 +12,11 @@
     <li class="nav-item" role="presentation">
       <button class="nav-link" id="RL-tab" data-bs-toggle="tab" data-bs-target="#RL-tab-pane" type="button" role="tab" aria-controls="RL-tab-pane" aria-selected="false">Read List Tab</button>
     </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="search-tab" data-bs-toggle="tab" data-bs-target="#search-tab-pane" type="button" role="tab" aria-controls="search-tab-pane" aria-selected="false">Search</button>
+    </li>
   </ul>
+  <!-- TAB1 -->
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="AB-tab-pane" role="tabpanel" aria-labelledby="AB-tab" tabindex="0">
         <% arr.forEach(function({bookFile,name,_id,readList}){ %>
@@ -31,7 +33,23 @@
             </li>
         <% }) %>
     </div>
-    <div class="tab-pane fade" id="RL-tab-pane" role="tabpanel" aria-labelledby="RL-tab" tabindex="0">
+    <!-- TAB2 -->
+    <div class="tab-pane fade" id="RL-tab-pane" role="tabpanel" aria-labelledby="RL-tab" tabindex="0"></div>
+
+    <!-- TAB3 -->
+    <div class="tab-pane fade" id="search-tab-pane" role="tabpanel" aria-labelledby="search-tab" tabindex="0">
+      <input type="search" name="search-box" id="">
+      <input type="hidden" name="userInfo" data-userinfo="<%=JSON.stringify(user.bookSchema)%>">
+      <p>Select tags for searching books:</p>
+      
+      <label for="by-name">Title</label>
+      <input type="radio" name="tags" value="name"  id="">
+
+      <label for="by-author">Author</label>
+      <input type="radio" name="tags" value="author" id="">
+
+      <label for="by-genre">Genre</label>
+      <input type="radio" name="tags" value="genre" id="">
     </div>
   </div>
 
