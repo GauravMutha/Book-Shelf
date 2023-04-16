@@ -59,20 +59,30 @@ tab2.addEventListener('click',function(event){
 
 
 
+var selectedTag='name';
 const tags=document.querySelectorAll('input[type="radio"][name="tags"]');
-var selectedTag;
+const  searchBox=document.querySelector('input[type="search"][name="search-box"]');
+var allBooks=JSON.parse((document.querySelector('input[type="hidden"][name="userInfo"]')).dataset.userinfo);
+var searchResult=document.getElementById('searchResult')
+const listTags = searchResult.querySelectorAll('li');
+const genreDropdown=document.querySelector('select[name="genre-select"]')
+
 tags.forEach(function(tag){
     tag.addEventListener('click',function(e){
         selectedTag=e.target.value
-        searchBox.value="";
+        searchBox.value=""; 
+        listTags.forEach(function(tag){
+            tag.classList.remove('hide');
+        });
     })
 })
 
-var allBooks=JSON.parse((document.querySelector('input[type="hidden"][name="userInfo"]')).dataset.userinfo);
-const  searchBox=document.querySelector('input[type="search"][name="search-box"]');
 searchBox.addEventListener('input',(e)=>{
-    const queryResult=allBooks.filter((book)=>{
-        return book[selectedTag]==e.target.value
-    })
-    console.log(queryResult)
+    const inputValue = e.target.value.toLowerCase();
+    for(let i=0 ;i<allBooks.length;i++){
+        const serverData=allBooks[i][selectedTag].toLowerCase()
+        const isVisible=inputValue=='' || serverData.includes(inputValue);
+        listTags[i].classList.toggle('hide',!isVisible)
+    }
 })
+
