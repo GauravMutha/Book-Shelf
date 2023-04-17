@@ -22,8 +22,8 @@ module.exports.showProfile = function (req, res) {
     countArr.push(genreCount[key])
   }
   const colors = allColors.splice(0, genreArr.length)  
-  const width = 500; //px
-  const height = 500; //px
+  const width = 200; //px
+  const height = 200; //px
   const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height});
 
     const configuration = {

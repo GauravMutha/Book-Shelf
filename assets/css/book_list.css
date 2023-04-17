@@ -1,2 +1,12 @@
+.searchResultTable {
+  table-layout: fixed;
+  width: 100%; }
+
+.rowData > * {
+  display: table-cell;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
 .hide {
   display: none; }

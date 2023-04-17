@@ -30,19 +30,32 @@
         <input type="hidden" name="userInfo" data-userinfo="<%=JSON.stringify(user.bookSchema)%>">
       </div>  
       <div id="searchResult">
-        <% arr.forEach(function({bookFile,name,_id,readList}){ %>
-          <%  const bookFileEncoded=encodeURIComponent(bookFile); %>
-          <li>
-              <p>
-                  <a href="/user/pdf/<%=bookFile%>" target="_blank"><%=name%></a>
-                  <small><a href="/user/pdf/delete-book/<%=_id%>/<%=bookFileEncoded%>">X</a></small>
-                      <label>
-                        <input type="checkbox" name="readList" data-book-id="<%=_id%>"  <%= readList ? 'checked' : '' %> >
-                        Add to read list
-                      </label>
-              </p>
-          </li>
-      <% }) %>
+        <table class="searchResultTable">
+          <tr id="headers">
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Upload Date</th>
+            <th>Add To Read List</th>
+            <th>Delete</th>
+          </tr>
+          <% arr.forEach(function({bookFile,name,author,genre,_id,readList,createdAt}){ %>
+            <%  const bookFileEncoded=encodeURIComponent(bookFile); %>
+              <tr class="rowData rowDataAllBooks">
+                <td><a href="/user/pdf/<%=bookFile%>" target="_blank"><%=name%></a></td>
+                <td><p><%=author%></p></td>
+                <td><p><%=genre%></p></td>
+                <td><%=createdAt.toString().substring(0,21)%></td>
+                <td>
+                  <label>
+                    <input type="checkbox" name="readList" data-book-id="<%=_id%>"  <%= readList ? 'checked' : '' %> >
+                    Add to read list
+                  </label>
+                </td>
+                <td><small><a href="/user/pdf/delete-book/<%=_id%>/<%=bookFileEncoded%>">X</a></small></td>
+              </tr>
+          <% }) %>
+      </table>
       </div>
     </div>
     <!-- TAB2 -->

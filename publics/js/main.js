@@ -32,19 +32,19 @@ tab2.addEventListener('click',function(event){
         if(xhr.readyState==4){
             if(xhr.status==200){
                 const books=JSON.parse(xhr.responseText)
-                const ul=document.createElement('ul');
-                books.forEach(function({bookFile,name}){
-                    const li=document.createElement('li');
-                    const a=document.createElement('a');
-                    a.href='/user/pdf/'+bookFile;
-                    a.textContent=name;
-                    a.target='_blank'
-                    li.appendChild(a);
-                    ul.appendChild(li);
+                const table=document.createElement('table');
+                const headerHTMLString="<tr><th>Title</th><th>Author</th><th>Genre</th></tr>"
+                table.innerHTML+=headerHTMLString
+                table.classList.add('searchResultTable')
+                books.forEach(function({bookFile,name,author,genre}){
+                    const tr=document.createElement('tr');
+                    tr.innerHTML=`<td><a href="/user/pdf/${bookFile}" target="_blank">${name}</a></td><td><p>${author}</p></td><td><p>${genre}</p></td>`
+                    tr.classList.add('rowData')
+                    table.append(tr);
                 })
                 const tab2Div=document.getElementById('RL-tab-pane');
                 tab2Div.innerHTML = '';
-                tab2Div.appendChild(ul)
+                tab2Div.appendChild(table)
             }
             else {
                 console.log(xhr.statusText)
@@ -63,16 +63,15 @@ var selectedTag='name';
 const tags=document.querySelectorAll('input[type="radio"][name="tags"]');
 const  searchBox=document.querySelector('input[type="search"][name="search-box"]');
 var allBooks=JSON.parse((document.querySelector('input[type="hidden"][name="userInfo"]')).dataset.userinfo);
-var searchResult=document.getElementById('searchResult')
-const listTags = searchResult.querySelectorAll('li');
+const rowDataElements = document.querySelectorAll(".rowDataAllBooks");
 const genreDropdown=document.querySelector('select[name="genre-select"]')
 
 tags.forEach(function(tag){
     tag.addEventListener('click',function(e){
         selectedTag=e.target.value
         searchBox.value=""; 
-        listTags.forEach(function(tag){
-            tag.classList.remove('hide');
+        rowDataElements.forEach(function(row){
+            row.classList.remove('hide');
         });
     })
 })
@@ -82,7 +81,7 @@ searchBox.addEventListener('input',(e)=>{
     for(let i=0 ;i<allBooks.length;i++){
         const serverData=allBooks[i][selectedTag].toLowerCase()
         const isVisible=inputValue=='' || serverData.includes(inputValue);
-        listTags[i].classList.toggle('hide',!isVisible)
+        rowDataElements[i].classList.toggle('hide',!isVisible)
     }
 })
 

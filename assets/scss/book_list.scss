@@ -1,7 +1,14 @@
-// body{
-//     // overflow:hidden;
-//     // background-color: lightslategray
-// }
+.searchResultTable {
+  table-layout: fixed; // Set table layout to fixed
+  width: 100%; // Set table width to 100%
+}
+
+.rowData > * {
+  display: table-cell; // Set display to table-cell for <td> elements
+  white-space: nowrap; // Prevent line breaks in table cells
+  overflow: hidden; // Hide overflow content
+  text-overflow: ellipsis; // Show ellipsis (...) for overflow text
+}
 .hide {
     display: none;
 }
