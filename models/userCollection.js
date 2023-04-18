@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const multer = require('multer')
 const path=require('path');
 const BOOK_PATH =path.join('/user_uploads/books');
+const bookController = require('../controller/bookController');
 
 const bookSchema=new mongoose.Schema({
     bookFile:{type:String},
@@ -40,6 +41,26 @@ bookSchema.statics.bookPath= BOOK_PATH;
 userSchema.statics.getReadList= function (callback){
   return this.find({'bookSchema.readList':true},callback);
 }
+userSchema.pre('deleteOne',function(next){
+  const userID = this._conditions._id;
+  userCollection.findById(userID,function(err,foundUser){
+    if(err){
+      console.log(err,'Error in searching for user');
+      return next(err);
+    }
+    if(!foundUser){
+      console.log('User not found');
+      return next(new Error('User not found'));
+    }
+    console.log(foundUser)
+    foundUser.bookSchema.forEach(function({bookFile}){
+      bookController.deleteUserBooks(bookFile,function(err){
+        if(err) return next(err);
+      })
+    })
+    next();
+  })
+})
 
 const userCollection=mongoose.model('userCollection',userSchema);
 const bookCollection=mongoose.model('bookCollection',bookSchema);

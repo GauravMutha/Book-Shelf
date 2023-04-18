@@ -18,9 +18,6 @@
                     <a href="/user/sign-out">Sign Out</a>
                 </li>
                 <li>
-                    <a href="/user/bookForm">Upload</a>
-                </li>
-                <li>
                     <a href="/user/books">My Books</a>
                 </li>
                 <% }else{ %>
@@ -34,7 +31,9 @@
             </ul>
         </div>
     </nav>
- 
-
-
 </header>
+<%if(locals.user){%>
+    <div id="upload-link">
+        <a href="/user/bookForm">Upload</a>
+    </div>
+<%}%>

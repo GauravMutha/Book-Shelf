@@ -221,3 +221,12 @@ module.exports.sendRLBooksToClient = function (req, res) {
     res.send(filteredBooks)
   });
 }
+
+module.exports.deleteAccount=function(req,res){
+  const userID=req.user._id;
+  userCollection.deleteOne({_id:userID},function(err){
+    if(err){console.log('Error in deleting the user'); return;}
+    console.log('User deleted successfully');
+    return res.redirect('/user/sign-in') ;
+  })
+}

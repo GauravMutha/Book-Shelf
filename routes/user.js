@@ -19,4 +19,5 @@ router.get('/pdf/delete-book/:id/:bookFile',userController.deleteBook)
 router.get('/books',userController.showBooks)
 router.get('/books/rl-books',userController.sendRLBooksToClient)
 router.put('/books/update-read-list',userController.updateReadList);
+router.get('/delete-account',userController.deleteAccount);
 module.exports=router;

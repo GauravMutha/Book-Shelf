@@ -18,3 +18,10 @@
   #layout-header nav a {
     color: white;
     text-decoration: none; }
+
+#upload-link {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px; }
+  #upload-link a {
+    margin-right: 10px; }
