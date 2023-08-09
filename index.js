@@ -12,7 +12,7 @@ const MongoStore = require('connect-mongo');
 
 const store = new MongoStore(
     {
-        mongoUrl:process.env.MONGO_URL,
+        mongoUrl:process.env.MONGO_URI,
         mongooseConnection:db,
         autoRemove: 'disabled'
     },
@@ -33,8 +33,8 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 
 app.use(express.static('./assets'));
-app.use('./user_uploads',express.static(__dirname+'user_uploads'));
-app.use('/publics', express.static(__dirname + '/publics'));
+app.use('/user_uploads', express.static(path.join(__dirname, 'user_uploads')));
+app.use('/publics', express.static(path.join(__dirname, 'publics')));
 
 app.use(expressLayouts);
 app.set('layout extractStyles', true);
