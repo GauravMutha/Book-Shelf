@@ -59,5 +59,5 @@ app.use('/',require('./routes/index.js'));
 app.listen(process.env.PORT,function(err){
     if(err) console.log(`Error in running the server: ${err}`);
 
-    else console.log(`Server is up and running on port ${port}`);
+    else console.log(`Server is up and running on port ${process.env.PORT}`);
 })
