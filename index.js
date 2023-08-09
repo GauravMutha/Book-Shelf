@@ -5,7 +5,6 @@ const session=require('express-session');
 const passport=require('passport');
 const passportLocal=require('./config/passport');
 const path=require('path');
-const port =3000;
 require('dotenv').config();
 const db=require('./config/mongoose');
 const MongoStore = require('connect-mongo');
@@ -57,7 +56,7 @@ app.use(passport.session());
 app.use(passport.setAuthenticatedUser)
 
 app.use('/',require('./routes/index.js'));
-app.listen(port,function(err){
+app.listen(process.env.PORT,function(err){
     if(err) console.log(`Error in running the server: ${err}`);
 
     else console.log(`Server is up and running on port ${port}`);
